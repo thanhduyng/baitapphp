@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\nguoidungchucnang;
+use App\dichuyentaisan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class NguoidungchucnangController extends Controller
+class DichuyentaisanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,8 @@ class NguoidungchucnangController extends Controller
      */
     public function index()
     {
-        //
+        $nkts = DB::table('nhatkitaisan')->get();
+        return view('dsnhatkitaisan', compact(['nkts']));
     }
 
     /**
@@ -41,10 +43,10 @@ class NguoidungchucnangController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\nguoidungchucnang  $nguoidungchucnang
+     * @param  \App\dichuyentaisan  $dichuyentaisan
      * @return \Illuminate\Http\Response
      */
-    public function show(nguoidungchucnang $nguoidungchucnang)
+    public function show(dichuyentaisan $dichuyentaisan)
     {
         //
     }
@@ -52,10 +54,10 @@ class NguoidungchucnangController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\nguoidungchucnang  $nguoidungchucnang
+     * @param  \App\dichuyentaisan  $dichuyentaisan
      * @return \Illuminate\Http\Response
      */
-    public function edit(nguoidungchucnang $nguoidungchucnang)
+    public function edit(dichuyentaisan $dichuyentaisan)
     {
         //
     }
@@ -64,10 +66,10 @@ class NguoidungchucnangController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\nguoidungchucnang  $nguoidungchucnang
+     * @param  \App\dichuyentaisan  $dichuyentaisan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, nguoidungchucnang $nguoidungchucnang)
+    public function update(Request $request, dichuyentaisan $dichuyentaisan)
     {
         //
     }
@@ -75,10 +77,10 @@ class NguoidungchucnangController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\nguoidungchucnang  $nguoidungchucnang
+     * @param  \App\dichuyentaisan  $dichuyentaisan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(nguoidungchucnang $nguoidungchucnang)
+    public function destroy(dichuyentaisan $dichuyentaisan)
     {
         //
     }

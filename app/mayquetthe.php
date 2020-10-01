@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class chucnang extends Model
+class mayquetthe extends Model
 {
     //
 }

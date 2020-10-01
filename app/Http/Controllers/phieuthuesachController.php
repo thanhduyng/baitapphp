@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\model_phieuthuesach;
+use Illuminate\Support\Facades\DB;
 
 class phieuthuesachController extends Controller
 {
@@ -47,6 +48,13 @@ class phieuthuesachController extends Controller
     {
         model_phieuthuesach::find($id)->delete();
         return redirect()->Route('phieuthuesach');
+    }
+
+    public function viewChiTietThueSach($id)
+    {
+        $ctThueSach = DB::table("phieuthuesach")->where("id", $id)->get();
+        $sach = DB::table("sachs")->pluck("tensach", "id");
+        return view("viewChiTietThueSach", compact(['ctThueSach', 'sach']));
     }
 
 }

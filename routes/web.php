@@ -62,34 +62,6 @@ Route::get('/sua_phieuthuesach/{id}', 'phieuthuesachController@sua');
 Route::post('/update_phieuthuesach', ['as' => 'update_phieuthuesach', 'uses' => 'phieuthuesachController@update']);
 Route::get('/xoa_phieuthuesach/{id}', 'phieuthuesachController@xoa');
 
-Route::get('/user/list', function () {
-    $users = DB::table("users")->get();
-    $phongban = DB::table("phong_ban")->pluck("tenPhongBan", "id");
-    $chucdanh = DB::table("chuc_danh")->pluck("tenChucDanh", "id");
-
-    return view(
-        'hienthi',
-        [
-            'phongban' => $phongban, 'chucdanh' => $chucdanh, 'users' => $users
-        ]
-    );
-})->name('user.list');
-
-Route::get('/user/edit/{id}', function ($id) {
-    $users = DB::table("users")->find($id);
-    $phongban = DB::table("phong_ban")->pluck("tenPhongBan", "id");
-    $chucdanh = DB::table("chuc_danh")->pluck("tenChucDanh", "id");
-
-    return view(
-        'update',
-        [
-            'phongbanid' => $phongban, 'chucdanhid' => $chucdanh, 'users' => $users
-        ]
-    );
-})->name('user.edit');
-
-
-
 Route::get('manhinhthemmoi', function () {
     // echo "Đây là màn hình thêm mới";
 
@@ -101,9 +73,47 @@ Route::get('manhinhthemmoi', function () {
 
     // }
 
+    // lấy 1 cột 
+    $data = DB::table('users')
+    ->select('name')
+    // ->where('id',5)
+    ->get();
+    // dd($data);
+
     //lấy dòng đầu tiên của dữ liệu
     $user = DB::table("users")->first();
     // dd($user->name)
+
+    //order by
+    $data = DB::table('users')->orderBy('id','ASC')
+    ->select('name')
+    ->get();
+    // dd($data);
+
+    // limit
+    // skip: vị trí bắt đầu
+    // take: lấy bao nhiêu phần tử
+    $data = DB::table('users')
+    ->skip(1)
+    ->take(2)
+    ->get();
+    // dd($data);
+
+    // select where between
+    $data = DB::table('users')
+    ->whereBetween('id',[2,4])->get();
+    // dd($data);
+
+    // select where not-between
+    $data = DB::table('users')
+    ->whereNotBetween('id',[2,4])->get();
+    // dd($data);
+
+    // where in
+    $data = DB::table('users')
+    ->whereIn('id',[2,4,5])
+    ->get();
+    // dd($data);
 
     //Lấy có where
     $userArr = DB::table("users")
@@ -135,8 +145,8 @@ Route::get('manhinhthemmoi', function () {
     // dd($userIdArr);
 
     // Lấy một mảng theo cột và có key & value, để đổ vào combobox
-    //$userIdNameArr = DB::table("users")
-    //->pluck("name","id"); // value,key
+    $userIdNameArr = DB::table("users")
+    ->pluck("name","id"); // value,key
 
     // dd($userIdNameArr);
 
@@ -144,15 +154,17 @@ Route::get('manhinhthemmoi', function () {
     //Viết màn hình cập nhập user(phân vào chức danh và phòng ban)
 
     // đếm số lượng record
-    // $countUser = DB::table("users")->where("id",2)->count();
+    $countUser = DB::table("users")
+    ->where('name','trọng ý')
+    ->count();
     // echo $countUser;exit;
 
     //group by
 
     // $max = DB::table("migrations")->max("batch");
-    // $sum = DB::table("migrations")->sum("batch");
-    // $avg = DB::table("migrations")->avg("batch");
-    // $maminx = DB::table("migrations")->min("batch");
+    // $max = DB::table("migrations")->sum("batch");
+    // $max = DB::table("migrations")->avg("batch");
+    // $max = DB::table("migrations")->min("batch");
     // echo $max;exit;
 
     // kiểm tra tồn tại
@@ -169,7 +181,7 @@ Route::get('manhinhthemmoi', function () {
     // $d = implode("-",(array_reverse(explode("/",$d))));
 
     // query tĩnh
-    // $r = DB::select("select * from users where id ?",[4]);
+    $r = DB::select("select * from users where id ?",[4]);
     // dd($r);
 
 
@@ -201,9 +213,6 @@ Route::get('/khongcoquyen', function () {
 // Một nhóm có nhiều chức năng
 // Kiểm tra quyền: gồm quyền ở bảng nguoidungchucnang và nhom_chucnang
 
-Route::get('/GoiController', 'MyController@XinChao');
-Route::get('/Thamso/{ten}', 'MyController@KhoaHoc');
-
 // Viết chức năng quản lí thư viện gồm
 // Danh sách sách
 // Danh sách phiếu thuê sách
@@ -216,6 +225,26 @@ Route::get('/Thamso/{ten}', 'MyController@KhoaHoc');
 //----Báo cáo sách
 //--------Tháng thuê, tên sách, số lượng được thuê
 //--------Sắp xếp theo số lượng được thuê giảm dần
+
+// tally table 
+
+// Danh sách sách
+Route::get("/viewsach", 'sach_Controller@index')->name("viewsach");
+
+//Thêm mới sách
+Route::get('/create', 'sach_Controller@create')->name('create');
+Route::post('/store', 'sach_Controller@store')->name('store');
+
+//Cập nhật sách
+Route::get('/edit/{id}', 'sach_Controller@edit')->name('editsach1');
+Route::post('/editsach/{id}', 'sach_Controller@update')->name('editsach2');
+
+//Xoa sach
+Route::get('/del/{id}', 'sach_Controller@destroy');
+
+// ---Báo cáo sách
+Route::get("/viewBaoCaoSach", 'sach_Controller@viewBaoCaoSach')->name("viewbaocaosach");
+
 
 Route::get('/sach/list', function () {
     $sachs = DB::table("sachs")->get();
@@ -280,3 +309,121 @@ Route::get('/thongke/thang', function () {
 })->name("thongke.thang");
 
 Route::get('chucnang/them',"ChucnangController@them");
+
+Route::get("/viewChiTietThueSach/{id}", 'phieuthuesach@viewChiTietThueSach')->name("ctthuesach");
+
+// Quản lí vào ra cho 1 công ty 
+/*
+    Tạo các model bằng migrate:
+        nguoidung,phongban, mayquetthe, vàora
+
+    Viết các chức năng sau:
+        Quản lí nhân viên
+        Quản lí phòng ban
+        Quản lí máy quét thẻ (ai quẹt, mấy giờ)
+        Thêm mới vào/ra
+        Hiển thị danh sách vào ra cho 1 nhân viên theo ngày
+        Hiển thị danh sách vào ra theo tháng (các ngày trong tháng)
+            cho 1 nhân viên theo mẫu
+            Ngày -------Giờ vào -------Giờ ra ----- số lần vào/ra
+*/
+
+Route::get('/nguoidung', ['as' => 'nguoidung', 'uses' => 'ModelNguoidungController@hienthi']);
+Route::get('/them_nguoidung', 'ModelNguoidungController@them');
+Route::post('/save_nguoidung', ['as' => 'save_nguoidung', 'uses' => 'ModelNguoidungController@save']);
+Route::get('/sua_nguoidung/{id}', 'ModelNguoidungController@sua');
+Route::post('/update_nguoidung', ['as' => 'update_nguoidung', 'uses' => 'ModelNguoidungController@update']);
+
+Route::get('/listphongban', ['as' => 'listphongban', 'uses' => 'ModelPhongbansController@hienthi']);
+Route::get('/add_phongban', 'ModelPhongbansController@them');
+Route::post('/luu_phongban', ['as' => 'luu_phongban', 'uses' => 'ModelPhongbansController@save']);
+Route::get('/edit_phongban/{id}', 'ModelPhongbansController@sua');
+Route::post('/edit_phongban2', ['as' => 'edit_phongban2', 'uses' => 'ModelPhongbansController@edit2']);
+
+Route::get('/divao', ['as' => 'divao', 'uses' => 'DivaoController@hienthi']);
+Route::get('/them_divao', 'DivaoController@them');
+Route::post('/save_divao', 'DivaoController@save');
+
+
+Route::get('qb/get', function(){
+    $data = DB::table('users')->get();
+   
+   
+});
+
+
+// Viết chương trình quản lí tài sản gồm
+//----  Quản lí người dùng (tên)
+//----  Quản lí nhà cung cấp (tên)
+//----  Quản lí chủng loại (tên)
+//----  Quản lí tài sản (tên)
+//----  Di chuyển tài sản và ghi nhật kí di chuyển
+//----  Xem danh sách di chuyển tài sản
+
+// Danh sách người dùng
+Route::get("/dsnguoidung", 'NguoidungController@index')->name("dsnguoidung");
+
+// thêm mới người dùng
+Route::get('/createnguoidung', 'NguoidungController@create')->name('createnguoidung');
+Route::post('/createnguoidung', 'NguoidungController@store')->name('createnguoidung2');
+
+//Cập nhật người dùng
+Route::get('/editnguoidung/{id}', 'NguoidungController@edit')->name('edit');
+Route::post('/editnguoidung/{id}', 'NguoidungController@update')->name('edit2');
+
+//Xoa thuê nguoi dung
+Route::get('/deletenguoidung/{id}', 'NguoidungController@destroy');
+
+/////////////////////////////////
+
+// Danh sách chủng loại
+Route::get("/dschungloai", 'ChungloaiController@index')->name("dschungloai");
+
+// thêm mới chủng loại
+Route::get('/createchungloai', 'ChungloaiController@create')->name('createchungloai');
+Route::post('/createchungloai', 'ChungloaiController@store')->name('createchungloai2');
+
+//Cập nhật chủng loại
+Route::get('/editchungloai/{id}', 'ChungloaiController@edit')->name('edit');
+Route::post('/editchungloai/{id}', 'ChungloaiController@update')->name('edit2');
+
+//Xoa thuê chủng loại
+Route::get('/deletechungloai/{id}', 'ChungloaiController@destroy');
+
+////////////////////////////////
+
+// Danh sách nhacc
+Route::get("/dsnhacungcap", 'NhacungcapController@index')->name("dsnhacungcap");
+
+// thêm mới nhacc
+Route::get('/createnhacc', 'NhacungcapController@create')->name('createnhacc');
+Route::post('/createnhacc', 'NhacungcapController@store')->name('createnhacc2');
+
+//Cập nhật nhacc
+Route::get('/editnhacc/{id}', 'NhacungcapController@edit')->name('edit');
+Route::post('/editnhacc/{id}', 'NhacungcapController@update')->name('edit2');
+
+//Xoa thuê nhacc
+Route::get('/deletenhacc/{id}', 'NhacungcapController@destroy');
+
+///////////////////////////////////////
+
+// Danh sách tài sản
+Route::get("/dstaisan", 'TaisanController@index')->name("dstaisan");
+
+// thêm mới tài sản
+Route::get('/createts', 'TaisanController@create')->name('createts');
+Route::post('/createts', 'TaisanController@store')->name('createts2');
+
+//Cập nhật tài sản
+Route::get('/editts/{id}', 'TaisanController@edit')->name('edit');
+Route::post('/editts/{id}', 'TaisanController@update')->name('edit2');
+
+//Xoa thuê tài sản
+Route::get('/deletets/{id}', 'TaisanController@destroy');
+
+/////////////////////////////////////////////
+
+// Danh sách di chuyển tài sản 
+Route::get("/dsnhatkitaisan", 'DichuyentaisanController@index')->name("dsnhatkitaisan");
+

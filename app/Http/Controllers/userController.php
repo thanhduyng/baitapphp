@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\model_user;
 use App\model_PhongBan;
 use App\model_ChucDanh;
+use Illuminate\Support\Facades\DB;
 
 
 class userController extends Controller
@@ -20,8 +21,14 @@ class userController extends Controller
     public function them()
     {
         $users = model_user::all()->toArray();
-        $cd = model_ChucDanh::all()->toArray();
-        $pb = model_PhongBan::all()->toArray();
+        // $cd = model_ChucDanh::all()->toArray();
+        // $pb = model_PhongBan::all()->toArray();
+        $cd = DB::table("chuc_danh")->pluck('tenChucDanh','id');
+        $pb = DB::table("phong_ban")->pluck('tenPhongBan','id');
+        // $pb = DB::table("phong_ban")
+        // ->pluck("tenPhongBan","id");
+        // var_dump($cd);
+        // var_dump($pb);
         return view('them_user', compact(['users', 'cd','pb']));
     }
 

@@ -30,25 +30,28 @@
                 <label>Password:</label>
                 <input class="form-control" type="password" name="password" /><br>
             </div>
-            
+
+          
+
             <div class="form-group">
-                <label>Tên chức danh</label>
+                <label>Tên chức danh :</label>
                 <select name="tenChucDanh">
-                <?php foreach ($cd as $value) : ?>
-                        <option value="{{$value['id']}}">{{$value['tenChucDanh']}}</option>
-                    <?php endforeach ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Tên phòng ban</label>
-                <select name="tenPhongBan">
-                <?php foreach ($pb as $value) : ?>
-                        <option value="{{$value['id']}}">{{$value['tenPhongBan']}}</option>
-                    <?php endforeach ?>
+                    @foreach($cd as $nd => $value)
+                    <option value="{{$nd}}">{{$value}}</option>
+                    @endforeach
                 </select>
             </div>
 
-           
+            <div class="form-group">
+                <label>Tên phòng ban :</label>
+                <select name="tenPhongBan">
+                    @foreach($pb as $nd => $value)
+                    <option value="{{$nd}}">{{$value}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
             <input class="btn btn-primary" type="submit" value="Thêm" />
             <a class="btn btn-primary" href="/user" role="button">Danh sách</a>
         </form>
