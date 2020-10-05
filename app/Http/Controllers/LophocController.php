@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\dichuyentaisan;
+use App\lophoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DichuyentaisanController extends Controller
+class LophocController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class DichuyentaisanController extends Controller
      */
     public function index()
     {
-        $nkts = DB::table('nhatkitaisan')->get();
-        return view('dsnhatkitaisan', compact(['nkts']));
+        $lophoc = DB::table('lophocs')->get();
+        return view('dslophoc', compact(['lophoc']));
     }
 
     /**
@@ -26,9 +26,7 @@ class DichuyentaisanController extends Controller
      */
     public function create()
     {
-        $ts = DB::table('taisans')->pluck('tentaisan', 'id');
-        $nd = DB::table('nguoidungs')->pluck('tennguoidung', 'id');
-        return view('createnkts',compact(['ts','nd']));
+        return view('createlophoc');
     }
 
     /**
@@ -39,21 +37,19 @@ class DichuyentaisanController extends Controller
      */
     public function store(Request $request)
     {
-        $nkts = new dichuyentaisan();
-        $nkts->id_nguoidung = $request->id_nguoidung;
-        $nkts->id_taisan = $request->id_taisan;
-        $nkts->ngaydichuyen = $request->ngaydichuyen;
-        $nkts->save();
-        return redirect()->route('dsnhatkitaisan');
+        $lophoc = new lophoc();
+        $lophoc->tenlop = $request->tenlop;
+        $lophoc->save();
+        return redirect()->route('dslophoc');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\lophoc  $lophoc
      * @return \Illuminate\Http\Response
      */
-    public function show(dichuyentaisan $dichuyentaisan)
+    public function show(lophoc $lophoc)
     {
         //
     }
@@ -61,34 +57,39 @@ class DichuyentaisanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\lophoc  $lophoc
      * @return \Illuminate\Http\Response
      */
-    public function edit(dichuyentaisan $dichuyentaisan)
+    public function edit($id)
     {
-        //
+        $lophoc = lophoc::find($id);
+        return view('editlophoc',compact(['lophoc']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\lophoc  $lophoc
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, dichuyentaisan $dichuyentaisan)
+    public function update(Request $request, $id)
     {
-        //
+        $lophoc = lophoc::find($id);
+        $lophocedit = $request->all();
+        $lophoc->update($lophocedit);
+        return redirect()->route('dslophoc');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\lophoc  $lophoc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(dichuyentaisan $dichuyentaisan)
+    public function destroy($id)
     {
-        //
+        $lophoc = lophoc::destroy($id);
+        return redirect()->route('dslophoc');
     }
 }

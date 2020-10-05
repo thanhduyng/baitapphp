@@ -427,3 +427,80 @@ Route::get('/deletets/{id}', 'TaisanController@destroy');
 // Danh sách di chuyển tài sản 
 Route::get("/dsnhatkitaisan", 'DichuyentaisanController@index')->name("dsnhatkitaisan");
 
+// thêm mới danh sách nhật kí tài sản
+Route::get('/createnkts', 'DichuyentaisanController@create')->name('createnkts');
+Route::post('/createnkts', 'DichuyentaisanController@store')->name('createnkts2');
+
+// Bán sách điện tử
+    // Quản lý cấp học (Tiểu học, Trung học cơ sở, Trung học phổ thông)
+    // Quản lý lớp học (lớp 1..12)
+    // Quản lý đầu sách (tên sách, giá tiền mua online, lớp nào dùng)
+    // Quản lý license (mã license, đầu sách, trạng thái (đã dùng hay chưa), ngày dùng)
+    // Lập báo cáo số lượng sách được kích hoạt trong ngày theo mẫu: Cấp học, lớp họp, ngày, số lượng
+
+
+    // Danh sách cấp học
+Route::get("/dscaphoc", 'CaphocController@index')->name("dscaphoc");
+
+// thêm mới cấp học
+Route::get('/createcaphoc', 'CaphocController@create')->name('createcaphoc');
+Route::post('/createcaphoc', 'CaphocController@store')->name('createcaphoc2');
+
+//Cập nhật cấp học
+Route::get('/editcaphoc/{id}', 'CaphocController@edit')->name('edit');
+Route::post('/editcaphoc/{id}', 'CaphocController@update')->name('edit2');
+
+//Xoa cấp học
+Route::get('/deletecaphoc/{id}', 'CaphocController@destroy');
+
+/////////////////////////////////////////////////////
+
+// Danh sách lớp học
+Route::get("/dslophoc", 'LophocController@index')->name("dslophoc");
+
+// thêm mới lớp học
+Route::get('/createlophoc', 'LophocController@create')->name('createlophoc');
+Route::post('/createlophoc', 'LophocController@store')->name('createlophoc2');
+
+//Cập nhật lớp học
+Route::get('/editlophoc/{id}', 'LophocController@edit')->name('edit');
+Route::post('/editlophoc/{id}', 'LophocController@update')->name('edit2');
+
+//Xoa lớp học
+Route::get('/deletelophoc/{id}', 'LophocController@destroy');
+
+
+///////////////////////////////////////
+
+// Danh sách book
+Route::get("/dsbook", 'BookController@index')->name("dsbook");
+
+// thêm mới book
+Route::get('/createbook', 'BookController@create')->name('createbook');
+Route::post('/createbook', 'BookController@store')->name('createbook2');
+
+//Cập nhật book
+Route::get('/editbook/{id}', 'BookController@edit')->name('edit');
+Route::post('/editbook/{id}', 'BookController@update')->name('edit2');
+
+//Xoa book
+Route::get('/deletebook/{id}', 'BookController@destroy');
+
+///////////////////////////////////////
+
+// Danh sách license
+Route::get("/dslicense", 'LicenseController@index')->name("dslicense");
+
+// thêm mới book
+Route::get('/createlicense', 'LicenseController@create')->name('createlicense');
+Route::post('/createlicense', 'LicenseController@store')->name('createlicense2');
+
+//Cập nhật book
+Route::get('/editlicense/{id}', 'LicenseController@edit')->name('edit');
+Route::post('/editlicense/{id}', 'LicenseController@update')->name('edit2');
+
+//Xoa book
+Route::get('/deletelicense/{id}', 'LicenseController@destroy');
+
+// Báo cáo
+Route::get("/baocao", 'LicenseController@baocao')->name("baocao");

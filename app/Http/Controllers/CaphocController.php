@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\dichuyentaisan;
+use App\caphoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class DichuyentaisanController extends Controller
+class CaphocController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class DichuyentaisanController extends Controller
      */
     public function index()
     {
-        $nkts = DB::table('nhatkitaisan')->get();
-        return view('dsnhatkitaisan', compact(['nkts']));
+        $caphoc = DB::table('caphocs')->get();
+        return view('dscaphoc', compact(['caphoc']));
     }
 
     /**
@@ -26,9 +26,7 @@ class DichuyentaisanController extends Controller
      */
     public function create()
     {
-        $ts = DB::table('taisans')->pluck('tentaisan', 'id');
-        $nd = DB::table('nguoidungs')->pluck('tennguoidung', 'id');
-        return view('createnkts',compact(['ts','nd']));
+        return view('createcaphoc');
     }
 
     /**
@@ -39,56 +37,59 @@ class DichuyentaisanController extends Controller
      */
     public function store(Request $request)
     {
-        $nkts = new dichuyentaisan();
-        $nkts->id_nguoidung = $request->id_nguoidung;
-        $nkts->id_taisan = $request->id_taisan;
-        $nkts->ngaydichuyen = $request->ngaydichuyen;
-        $nkts->save();
-        return redirect()->route('dsnhatkitaisan');
+        $caphoc = new caphoc();
+        $caphoc->tencap = $request->tencap;
+        $caphoc->save();
+        return redirect()->route('dscaphoc');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\caphoc  $caphoc
      * @return \Illuminate\Http\Response
      */
-    public function show(dichuyentaisan $dichuyentaisan)
+    public function show()
     {
-        //
+       
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\caphoc  $caphoc
      * @return \Illuminate\Http\Response
      */
-    public function edit(dichuyentaisan $dichuyentaisan)
+    public function edit($id)
     {
-        //
+        $caphoc = caphoc::find($id);
+        return view('editcaphoc',compact(['caphoc']));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\caphoc  $caphoc
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, dichuyentaisan $dichuyentaisan)
+    public function update(Request $request, $id)
     {
-        //
+        $caphoc = caphoc::find($id);
+        $caphocedit = $request->all();
+        $caphoc->update($caphocedit);
+        return redirect()->route('dscaphoc');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\dichuyentaisan  $dichuyentaisan
+     * @param  \App\caphoc  $caphoc
      * @return \Illuminate\Http\Response
      */
-    public function destroy(dichuyentaisan $dichuyentaisan)
+    public function destroy($id)
     {
-        //
+        $caphoc = caphoc::destroy($id);
+        return redirect()->route('dscaphoc');
     }
 }

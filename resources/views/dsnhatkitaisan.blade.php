@@ -16,7 +16,7 @@
                 <th>Tên nguời nhận tài sản</th>
                 <th>Tên tài sản</th>
                 <th>Ngày di chuyển</th>
-                <th>action</th>
+                <th><a href="/createnkts">Thêm</a></th>
             </tr>
             @foreach($nkts as $ts)
             <tr>
