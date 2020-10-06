@@ -30,9 +30,9 @@
                 <label>Trạng thái :</label>
                 <div class="radio">
                     <label class="checkbox-inline">
-                        <input type="radio"  name="trangthai" value="1" id="trangthai1">Đã dùng</label>
+                        <input type="radio"  name="trangthai" checked="checked" value="1" id="trangthai1">Đã dùng</label>
                     <label class="checkbox-inline">
-                        <input type="radio"  name="trangthai" checked="checked" value="0" id="trangthai2">Chưa dùng</label>
+                        <input type="radio"  name="trangthai"  value="0" id="trangthai2">Chưa dùng</label>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
             </div>
 
             <input class="btn btn-primary" type="submit" value="Thêm" />
-            <a class="btn btn-primary" href="/dstaisan" role="button">Danh sách</a>
+            <a class="btn btn-primary" href="/dslicense" role="button">Danh sách</a>
     </div>
 </body>
 @endsection

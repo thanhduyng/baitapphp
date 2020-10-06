@@ -12,6 +12,7 @@
             <tr>
                 <th>Id</th>
                 <th>Tên lớp học</th>
+                <th>Tên Cấp học</th>
                 <th><a href="/createlophoc">Thêm</a></th>
             </tr>
             @foreach($lophoc as $cl)
@@ -22,6 +23,7 @@
                 <td>
                     {{$cl->tenlop}}
                 </td>
+                <td><?php echo \App\caphoc::find($cl->id_caphoc)->tencap ?></td>
                 <td>
                     <a class="btn btn-success" href="editlophoc/{{$cl->id}}">Edit</a>
                     <a class="btn btn-danger" href="deletelophoc/{{$cl->id}}">Delete</a>

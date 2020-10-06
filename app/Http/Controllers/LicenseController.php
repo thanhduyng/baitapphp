@@ -102,7 +102,7 @@ class LicenseController extends Controller
     public function baocao()
     {
         $baocao = DB::select(
-            'select 
+            'SELECT
             max(caphocs.tencap) as tencap,
             max(lophocs.tenlop) as tenlop,
             licenses.ngaydung,

@@ -6,7 +6,7 @@
 </header>
 <body>
   <div class="container"><br><br>
-    <form method="post" action="{{ route('edit2',[$book->id])}} ">
+    <form method="post" action="{{ route('editbook2',[$book->id])}} ">
       @csrf
 
       <div class="form-group">

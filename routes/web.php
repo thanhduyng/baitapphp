@@ -464,7 +464,7 @@ Route::post('/createlophoc', 'LophocController@store')->name('createlophoc2');
 
 //Cập nhật lớp học
 Route::get('/editlophoc/{id}', 'LophocController@edit')->name('edit');
-Route::post('/editlophoc/{id}', 'LophocController@update')->name('edit2');
+Route::post('/editlophoc/{id}', 'LophocController@update')->name('edit22');
 
 //Xoa lớp học
 Route::get('/deletelophoc/{id}', 'LophocController@destroy');
@@ -480,8 +480,8 @@ Route::get('/createbook', 'BookController@create')->name('createbook');
 Route::post('/createbook', 'BookController@store')->name('createbook2');
 
 //Cập nhật book
-Route::get('/editbook/{id}', 'BookController@edit')->name('edit');
-Route::post('/editbook/{id}', 'BookController@update')->name('edit2');
+Route::get('/editbook/{id}', 'BookController@edit')->name('editbook2');
+Route::post('/editbook/{id}', 'BookController@update')->name('editbook2');
 
 //Xoa book
 Route::get('/deletebook/{id}', 'BookController@destroy');

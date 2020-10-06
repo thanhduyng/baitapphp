@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\caphoc;
 use App\lophoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,8 @@ class LophocController extends Controller
      */
     public function create()
     {
-        return view('createlophoc');
+        $caphoc = DB::table('caphocs')->pluck('tencap', 'id');
+        return view('createlophoc',compact(['caphoc']));
     }
 
     /**
@@ -39,6 +41,7 @@ class LophocController extends Controller
     {
         $lophoc = new lophoc();
         $lophoc->tenlop = $request->tenlop;
+        $lophoc->id_caphoc = $request->id_caphoc;
         $lophoc->save();
         return redirect()->route('dslophoc');
     }
@@ -63,7 +66,8 @@ class LophocController extends Controller
     public function edit($id)
     {
         $lophoc = lophoc::find($id);
-        return view('editlophoc',compact(['lophoc']));
+        $caphoc = caphoc::pluck('tencap', 'id');
+        return view('editlophoc',compact(['lophoc','caphoc']));
     }
 
     /**
